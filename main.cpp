@@ -19,13 +19,13 @@ void insertionSort(vector<int>&vec, int n){                // do all dat with li
 }
 void selectionSort(vector<int>&vec, int n){
     for (int i = 0; i < n-1; ++i) {                           //loop till n-1 cause last iteration isn't needed (already sorted by then)
-        int mini = i;                                         //initialize min value to be i
+        int min = i;                                         //initialize min value to be i
         for (int j = i + 1; j < n; ++j) {                     //iterate after i to find a the absolute min for evey iteration
-            if (vec[j] < vec[mini]){
-                mini = j;
+            if (vec[j] < vec[min]){
+                min = j;
             }
         }
-        swap(vec[i], vec[mini]);                              //swap i and min (the min of that sub-array should be its first(ith for main arr) element)
+        swap(vec[i], vec[min]);                              //swap i and min (the min of that sub-array should be its first(ith for main arr) element)
     }
 }
 void bubbleSort(vector<int>&vec, int n){
@@ -40,6 +40,19 @@ void bubbleSort(vector<int>&vec, int n){
         }
         if(!swapped){
             break;
+        }
+    }
+}
+void shellSort(vector<int>&vec, int n){
+    for (int gap = n/2; gap >= 1; gap/=2) {
+        for (int j = gap; j < n; j++) {
+            int i = j - gap;
+            int temp = vec[j];
+            while (i >= 0 && temp < vec[i]){
+                vec[i + gap] = vec[i];
+                i-=gap;
+            }
+            vec[i+gap] = temp;
         }
     }
 }
@@ -103,7 +116,7 @@ void quickSort(vector<int>&vec, int n){             //wrapper function
 
 int main() {
     vector<int> arr = {9, 5, 4, 4, 3,10,80,40};
-    quickSort(arr, arr.size());
+    shellSort(arr, arr.size());
 
     cout << "Sorted: ";
     for (int num : arr)
