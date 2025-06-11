@@ -26,19 +26,58 @@ void selectionSort(vector<int>&vec, int n){
         swap(vec[i], vec[mini]);                              //swap i and min (the min of that sub-array should be its first(ith for main arr) element)
     }
 }
-void bubbleSort(vector<int>&vec, int n){                    //can use boolean to make it adaptive
-    for (int i = 0; i < n - 1; ++i) {                       //same as selection
+void bubbleSort(vector<int>&vec, int n){
+    bool swapped;                                           //boolean to stop sorting when array is already sorted(no swaps made at that iteration)
+    for (int i = 0; i < n - 1; ++i) {
+        swapped = false;
         for (int j = 0; j < n - i - 1; ++j) {               //iterate over the unsorted part (-i) and we comparing j and j+1 so (-1)
             if(vec[j] > vec[j+1]){
-                swap(vec[j], vec[j+1]);                 //swap to proper position //bubble up largest element to end
+                swap(vec[j], vec[j+1]);               //swap to proper position and bubble up largest element to end
+                swapped = true;
             }
+        }
+        if(!swapped){
+            break;
         }
     }
 }
 
+void merge(vector<int>&vec, int mid, int l ,int r){
+    int i = l,k=0,j=mid+1;
+
+    vector<int>vec2(r-l +1);                //new array to store merged sub arrays
+
+    while(i<=mid && j<=r){
+        if (vec[i] < vec[j])vec2[k++]=vec[i++];
+        else vec2[k++]=vec[j++];
+    }
+
+    while(i<= mid)vec2[k++] = vec[i++];        //if there is still elements in both subs
+    while(j<= r)vec2[k++] = vec[j++];
+
+    for (int m = 0; m < k; ++m) {
+        vec[m+l] = vec2[m];
+    }
+}
+
+void mergeSortAlgo(vector<int>&vec,int n, int l, int r){
+    if (l >= r)return;
+    int mid = (l+r) /2;
+
+    mergeSortAlgo(vec, n, l, mid);
+    mergeSortAlgo(vec, n, mid+1,r);
+    merge(vec, mid, l, r);
+
+}
+
+void mergeSort(vector<int>&vec, int n){             //wrapper function
+    mergeSortAlgo(vec,n,0,n-1);
+}
+
+
 int main() {
     vector<int> arr = {9, 5, 1, 4, 3};
-    bubbleSort(arr, arr.size());
+    mergeSort(arr, arr.size());
 
     cout << "Sorted: ";
     for (int num : arr)
