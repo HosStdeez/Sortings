@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+
+
 using namespace std;
 
 void insertionSort(vector<int>&vec, int n){                // do all dat with lists
@@ -60,24 +62,48 @@ void merge(vector<int>&vec, int mid, int l ,int r){
     }
 }
 
-void mergeSortAlgo(vector<int>&vec,int n, int l, int r){
+void mergeSort(vector<int>&vec,int n, int l, int r){
     if (l >= r)return;
     int mid = (l+r) /2;
 
-    mergeSortAlgo(vec, n, l, mid);
-    mergeSortAlgo(vec, n, mid+1,r);
+    mergeSort(vec, n, l, mid);
+    mergeSort(vec, n, mid+1,r);
     merge(vec, mid, l, r);
-
 }
 
 void mergeSort(vector<int>&vec, int n){             //wrapper function
-    mergeSortAlgo(vec,n,0,n-1);
+    mergeSort(vec,n,0,n-1);
+}
+
+
+int partition(vector<int>&vec, int l ,int r){
+    int i = l;
+    int pivot = vec[l];                             //first element approach for pivot -> pivot Idx is l
+    for (int j = i + 1; j <= r; ++j) {
+        if (vec[j] <= pivot){
+            i++;
+            swap(vec[i],vec[j]);
+        }
+    }
+    swap(vec[i],vec[l]);
+    return i;
+}
+
+void quickSort(vector<int>&vec, int n, int l, int r){
+    if (l >= r)return;
+    int pivotIdx = partition(vec, l, r);                 //pivot after being properly positioned
+    quickSort(vec, n, l, pivotIdx - 1);
+    quickSort(vec, n, pivotIdx + 1, r);
+}
+
+void quickSort(vector<int>&vec, int n){             //wrapper function
+    quickSort(vec, n, 0, n - 1);
 }
 
 
 int main() {
-    vector<int> arr = {9, 5, 1, 4, 3};
-    mergeSort(arr, arr.size());
+    vector<int> arr = {9, 5, 4, 4, 3,10,80,40};
+    quickSort(arr, arr.size());
 
     cout << "Sorted: ";
     for (int num : arr)
