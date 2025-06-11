@@ -1,0 +1,3 @@
+D:/Hoss/github/Sortings/cmake-build-debug/CMakeFiles/Sortings.dir
+D:/Hoss/github/Sortings/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Hoss/github/Sortings/cmake-build-debug/CMakeFiles/rebuild_cache.dir
