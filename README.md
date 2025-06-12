@@ -9,5 +9,10 @@ This repository contains step-by-step implementations and explanations of variou
 
 ✅ Selection Sort
 
+✅ Shell Sort
+
 ✅ Merge Sort
 
+✅ Quick Sort
+
+✅ Count Sort
